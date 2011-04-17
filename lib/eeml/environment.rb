@@ -22,14 +22,14 @@ module EEML
       env = Environment.new
       # Read data items
       REXML::XPath.each(doc, "/eeml/environment/data") do |node|
-        data = EEML::Data.new(node.elements['value'].text.to_f)
+        data = EEML::Data.new(node.elements['current_value'].text.to_f)
         # Read data tags
         REXML::XPath.each(node, "tag") do |tag|
           text = tag.text if(tag.text) 
           data.tags << text
         end
-        data.max_value = node.elements["value"].attributes["maxValue"] if(node.elements["value"].attributes["maxValue"]) 
-        data.min_value = node.elements["value"].attributes["minValue"] if(node.elements["value"].attributes["minValue"])
+        data.max_value = node.elements["current_value"].attributes["maxValue"] if(node.elements["current_value"].attributes["maxValue"]) 
+        data.min_value = node.elements["current_value"].attributes["minValue"] if(node.elements["current_value"].attributes["minValue"])
         # Load tags into data object
         env << data
  
